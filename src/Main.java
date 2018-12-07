@@ -4,9 +4,10 @@ public class Main {
         int[] arr = {10, 22, 9, 33, 21, 50, 41, 60, 80, 1};
 
         longestIncSubsequenceTab(arr);
+        lisEntryPoint(arr);
     }
 
-    public static void longestIncSubsequenceTab(int[] arr) {
+    private static void longestIncSubsequenceTab(int[] arr) {
         int[] lis = new int[arr.length];
         String[] pathLIS = new String[arr.length];
 
@@ -41,11 +42,42 @@ public class Main {
         System.out.println("The required Subsequence is: " + longestSubs);
     }
 
-    public static void lisEntryPoint(int[] arr) {
+    private static void lisEntryPoint(int[] arr) {
+        int overallMax = Integer.MIN_VALUE;
+        int[] quesBank = new int[arr.length];
 
+        for (int i = 0; i < arr.length; i++) {
+            int lisEndignAtI = lisEndingAtAPoint(arr, i, quesBank);
+            if (lisEndignAtI > overallMax) {
+                overallMax = lisEndignAtI;
+            }
+        }
+
+        System.out.println("The length of LIS is: " + overallMax);
     }
 
-    public static int lisEndingAtAPoint(int[] arr, int point) {
-        return 0;
+    private static int lisEndingAtAPoint(int[] arr, int point, int[] qb) {
+
+        if (point == 0) {
+            return 1;
+        }
+
+        if (qb[point] != 0) {
+            return qb[point];
+        }
+
+        int lisEndingAtPt = 0;
+        for (int i = 0; i < point; i++) {
+            if (arr[i] < arr[point]) {
+                int lengthOfLisEndingAtI = lisEndingAtAPoint(arr, i, qb);
+                if (lengthOfLisEndingAtI > lisEndingAtPt) {
+                    lisEndingAtPt = lengthOfLisEndingAtI;
+                }
+            }
+        }
+        lisEndingAtPt += 1;
+
+        qb[point] = lisEndingAtPt;
+        return lisEndingAtPt;
     }
 }
