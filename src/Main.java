@@ -25,7 +25,9 @@ public class Main {
                         lis[i] = lis[j]; // if yes, update myself, with your values
                         pathLIS[i] = pathLIS[j]; // and my path
                     }
+                    
                 }
+                
             }
 
             // the inner loop finds the largest subsequence BEFORE i, so now we add 1 to its length and current val to path
@@ -36,6 +38,7 @@ public class Main {
                 maxLength = lis[i];
                 longestSubs = pathLIS[i];
             }
+            
         }
 
         System.out.println("Length of Longest Increasing Subsequence is: " + maxLength);
